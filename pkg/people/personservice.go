@@ -52,3 +52,7 @@ func (s *Service) GetPerson(ctx context.Context, id uuid.UUID) (Person, error) {
 func (s *Service) GetGroup(ctx context.Context, id uuid.UUID) (Group, error) {
 	return s.store.GetGroup(ctx, id)
 }
+
+func (s *Service) GetStore() Store {
+	return s.store
+}

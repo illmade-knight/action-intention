@@ -3,6 +3,7 @@
 package locations
 
 import (
+	"log"
 	"strings"
 	"time"
 
@@ -36,33 +37,31 @@ type LocationMatcher struct {
 
 // Match compares the matcher against a local location to determine match quality.
 func (m *LocationMatcher) Match(local Location) MatchResult {
-	// Name must be a case-insensitive match.
+	log.Printf("[Matcher Debug] Comparing INCOMING ('%s') vs LOCAL ('%s')", m.Name, local.Matcher.Name)
+
 	if !strings.EqualFold(m.Name, local.Matcher.Name) {
+		log.Println("[Matcher Debug] -> Name MISMATCH. Result: NONE")
 		return MatchNone
 	}
+	log.Println("[Matcher Debug] -> Name MATCH.")
 
-	// If coordinates are provided on both, they must be very close.
 	if m.Lat != nil && m.Lon != nil && local.Matcher.Lat != nil && local.Matcher.Lon != nil {
 		distanceKm := haversine(*m.Lat, *m.Lon, *local.Matcher.Lat, *local.Matcher.Lon)
-
-		// Less than 50 meters is an exact match.
 		if distanceKm <= 0.05 {
 			return MatchExact
 		}
-		// More than 500 meters apart is not a match, even with the same name.
 		if distanceKm > 0.5 {
 			return MatchNone
 		}
-		// Otherwise, it's a possible match.
 		return MatchPossible
 	}
 
-	// If no coordinates, an exact name and category match is considered exact.
 	if strings.EqualFold(m.Category, local.Matcher.Category) {
+		log.Println("[Matcher Debug] -> Category MATCH. Result: EXACT")
 		return MatchExact
 	}
 
-	// If only the name matches, it's a possibility.
+	log.Println("[Matcher Debug] -> Category MISMATCH, but name matched. Result: POSSIBLE")
 	return MatchPossible
 }
 

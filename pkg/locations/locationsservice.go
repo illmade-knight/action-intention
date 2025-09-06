@@ -48,6 +48,10 @@ func (s *Service) AddSharedLocation(ctx context.Context, name, category string) 
 	return loc, err
 }
 
+func (s *Service) GetStore() Store {
+	return s.store
+}
+
 // GetLocation fetches a single location by its ID.
 func (s *Service) GetLocation(ctx context.Context, id uuid.UUID) (Location, error) {
 	return s.store.GetByID(ctx, id)
