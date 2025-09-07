@@ -68,8 +68,8 @@ func main() {
 	// Build the sharable payload
 	payload := sharing.SharedPayload{
 		Intention: soraIntention,
-		Locations: map[uuid.UUID]locations.Location{soraCoffee.ID: soraCoffee},
-		People:    map[uuid.UUID]people.Person{soraJim.ID: soraJim},
+		Locations: map[string]locations.Location{soraCoffee.ID.String(): soraCoffee},
+		People:    map[string]people.Person{soraJim.ID.String(): soraJim},
 	}
 
 	// --- Lucas receives the payload and reconciles it ---
