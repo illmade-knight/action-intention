@@ -5,13 +5,14 @@ go 1.24.0
 toolchain go1.24.6
 
 require (
+	cloud.google.com/go/firestore v1.18.0
 	cloud.google.com/go/pubsub/v2 v2.0.0
 	github.com/google/uuid v1.6.0
 	github.com/illmade-knight/go-dataflow v0.3.4-beta
-	github.com/illmade-knight/go-key-service v0.0.0
+	github.com/illmade-knight/go-key-service v0.0.1-beta
 	github.com/illmade-knight/go-secure-messaging v0.0.1-beta
 	github.com/illmade-knight/go-test v0.0.6
-	github.com/illmade-knight/routing-service v0.0.1-beta
+	github.com/illmade-knight/routing-service v0.0.2-beta
 	github.com/rs/zerolog v1.34.0
 	github.com/stretchr/testify v1.11.1
 )
@@ -23,7 +24,6 @@ require (
 	cloud.google.com/go/auth/oauth2adapt v0.2.8 // indirect
 	cloud.google.com/go/bigquery v1.70.0 // indirect
 	cloud.google.com/go/compute/metadata v0.8.0 // indirect
-	cloud.google.com/go/firestore v1.18.0 // indirect
 	cloud.google.com/go/iam v1.5.2 // indirect
 	cloud.google.com/go/longrunning v0.6.7 // indirect
 	cloud.google.com/go/monitoring v1.24.2 // indirect
@@ -128,7 +128,7 @@ require (
 
 // Add the replace block to point to your local directories.
 // The paths are relative to this go.mod file.
-replace github.com/illmade-knight/go-key-service => ../go-key-service
+//replace github.com/illmade-knight/go-key-service => ../go-key-service
 
 //replace github.com/illmade-knight/routing-service => ../routing-service
 
