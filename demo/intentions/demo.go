@@ -24,7 +24,7 @@ func main() {
 	peopleStore := people.NewInMemoryStore()
 	peopleService := people.NewService(peopleStore)
 	intentionStore := intentions.NewInMemoryStore()
-	intentionService := intentions.NewService(intentionStore)
+	intentionService := intentions.NewIntentionService(intentionStore)
 
 	ctx := context.Background()
 	user := "Sora"

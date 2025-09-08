@@ -10,22 +10,28 @@ import (
 	"github.com/google/uuid"
 )
 
-// Service provides the business logic for managing intentions.
+// IntentionService provides the business logic for managing intentions.
 // It orchestrates the storage and retrieval of intention data.
-type Service struct {
+type IntentionService struct {
 	store Store
 }
 
-// NewService is the constructor for our intentions Service.
+// NewIntentionService is the constructor for our intentions IntentionService.
 // It takes a Store, allowing us to easily switch between in-memory,
 // database, or mock stores.
-func NewService(store Store) *Service {
-	return &Service{store: store}
+func NewIntentionService(store Store) *IntentionService {
+	return &IntentionService{store: store}
+}
+
+// GetStore returns the underlying data store for the service.
+// This is needed by components like the Reconciler that require direct data access.
+func (s *IntentionService) GetStore() Store {
+	return s.store
 }
 
 // AddIntention creates a new intention, validates it, and saves it to the store.
 // MODIFIED: The 'target' parameter is now a slice 'targets []Target'.
-func (s *Service) AddIntention(ctx context.Context, user, action string, targets []Target, start, end time.Time) (Intention, error) {
+func (s *IntentionService) AddIntention(ctx context.Context, user, action string, targets []Target, start, end time.Time) (Intention, error) {
 	// --- Validation ---
 	if user == "" || action == "" {
 		return Intention{}, fmt.Errorf("user and action cannot be empty")
@@ -54,7 +60,7 @@ func (s *Service) AddIntention(ctx context.Context, user, action string, targets
 }
 
 // GetActiveIntentionsForUser is a convenient method to find what a user is currently doing.
-func (s *Service) GetActiveIntentionsForUser(ctx context.Context, user string) ([]Intention, error) {
+func (s *IntentionService) GetActiveIntentionsForUser(ctx context.Context, user string) ([]Intention, error) {
 	now := time.Now()
 	spec := QuerySpec{
 		User:     &user,

@@ -11,7 +11,7 @@
 //     - Hybrid encryption of the payload using AES-256 and RSA.
 //     - Cryptographic binding of the routing information using AES-GCM's AAD feature.
 //     - Digital signing of the encrypted data to ensure authenticity and integrity.
-//  6. The secure transport of the message via the simulated Routing Service.
+//  6. The secure transport of the message via the simulated Routing IntentionService.
 //  7. The complete reception process by Bob:
 //     - Verification of the digital signature.
 //     - Hybrid decryption of the payload.
@@ -60,7 +60,7 @@ func main() {
 	bobPeopleStore := people.NewInMemoryStore()
 
 	// Each user generates a public/private key pair. The private key is kept secret
-	// on their local device, while the public key is uploaded to the Key Service
+	// on their local device, while the public key is uploaded to the Key IntentionService
 	// so other users can discover it.
 	alicePrivateKey, alicePublicKey, _ := crypto.GenerateKeys()
 	keyServiceStore.StoreKey("Alice", alicePublicKey)
@@ -149,7 +149,7 @@ func main() {
 		Signature:             signature,
 	}
 	routingServiceQueue.Enqueue(envelope)
-	log.Println("5. Secure envelope sent to Routing Service.")
+	log.Println("5. Secure envelope sent to Routing IntentionService.")
 
 	// --- Phase 5: Bob Receives and Processes the Message ---
 	log.Println("\n--- Bob's client is fetching and processing the message ---")
